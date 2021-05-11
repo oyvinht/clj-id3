@@ -25,32 +25,32 @@
             {:outlook "overcast" :temp "mild" :humidity "high"   :wind "strong" :play-tennis "yes"}
             {:outlook "overcast" :temp "cool" :humidity "normal" :wind "strong" :play-tennis "yes"}
             {:outlook "overcast" :temp "hot"  :humidity "high"   :wind "weak"   :play-tennis "yes"}]
-           (subset examples :outlook "overcast")))))
+           (#'id3.core/subset examples :outlook "overcast")))))
   
 (deftest test-attr-val-counts
   (testing "Test count number of attributes with a specific value."
     (is (= {"sunny" 5 "overcast" 4 "rain" 5}
-           (attr-val-counts :outlook examples)))))
+           (#'id3.core/attr-val-counts :outlook examples)))))
 
 (deftest test-entropy []
   (testing "Testing if entropy function works."
     (is (= (float 0.940286)
-           (float (entropy examples :play-tennis))))))
+           (float (#'id3.core/entropy examples :play-tennis))))))
 
 (deftest test-info-gain []
   (testing "Testing if info-gain function works."
     (is (= (float 0.1518355)
-           (float (info-gain :humidity examples :play-tennis))))))
+           (float (#'id3.core/info-gain :humidity examples :play-tennis))))))
 
 (deftest test-most-info-gaining-attr []
   (testing "Testing if most-info-gaining-attribute function works."
     (is (= :outlook
-           (most-info-gaining-attr [:humidity :outlook :temp :wind] examples :play-tennis)))))
+           (#'id3.core/most-info-gaining-attr [:humidity :outlook :temp :wind] examples :play-tennis)))))
 
 (deftest test-most-common-attr-val []
   (testing "Testing if most-common-attribute-value function works."
     (is (= "mild"
-           (most-common-attr-val :temp examples)))))
+           (#'id3.core/most-common-attr-val :temp examples)))))
 
 (deftest test-id3 []
   (testing "Testing if id3 function works."
