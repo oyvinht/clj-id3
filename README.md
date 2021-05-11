@@ -7,12 +7,10 @@ A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3, aka
 
 ## Usage
 
-project.clj:
+In project.clj:
 ```
-(...)
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [net.clojars.oyvinht/id3 "1.0.0"]]
-(...)
 ```
 
 core.clj:
@@ -36,11 +34,11 @@ core.clj:
    {:outlook "overcast" :temp "hot"  :humidity "normal" :wind "weak"   :play-tennis "yes"}
    {:outlook "rain"     :temp "mild" :humidity "high"   :wind "strong" :play-tennis "no"}])
 
-(def dtree (id3 examples :play-tennis "yes" "no"))
+(def dtree (id3 examples :play-tennis "yes" "no")) ; Create tree
 
-(def instance {:humidity "high" :outlook "overcast" :temp "hot" :wind "weak"})
+(def instance {:humidity "high" :outlook "overcast" :temp "hot" :wind "weak"}) ; Anyone for tennis?
 
-(classify instance dtree)
+(classify instance dtree) ; Decide instance class
 
 ;;;; -> "yes"
 ```
