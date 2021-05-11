@@ -2,6 +2,9 @@
 
 A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3, aka "Induction of Decision Trees".
 
+## Installation
+[![Clojars Project](https://img.shields.io/clojars/v/net.clojars.oyvinht/id3.svg)](https://clojars.org/net.clojars.oyvinht/id3)
+
 ## Usage
 
 ```
