@@ -1,8 +1,7 @@
 (ns id3.core-test
   (:require [clojure.test :refer :all]
             [id3.core :refer :all]
-            [criterium.core :as criterium]
-            ))
+            [criterium.core :as criterium]))
 
 (def examples
   [{:outlook "sunny"    :temp "hot"  :humidity "high"   :wind "weak"   :play-tennis "no"}
@@ -55,8 +54,7 @@
 
 (deftest test-id3 []
   (testing "Testing if id3 function works."
-    (is (= '(:outlook
-             ("rain" (:wind ("weak" "yes") ("strong" "no")))
-             ("overcast" "yes")
-             ("sunny" (:humidity ("high" "no") ("normal" "yes"))))
-           (id3 examples :play-tennis "yes" "no")))))
+    (let [result (id3 examples :play-tennis "yes" "no")]
+      (is (= "no" (get-in result [:outlook "rain" :wind "strong"])))
+      (is (= "yes" (get-in result [:outlook "overcast"])))
+      (is (= "no" (get-in result [:outlook "sunny" :humidity "high"]))))))

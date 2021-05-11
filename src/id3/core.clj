@@ -61,45 +61,36 @@
   "Return the most common value of 'attribute' in 'examples'."
   (key (max-map-entry (attr-val-counts attribute examples))))
 
-
 (defn id3
   ([examples target-attribute positive-value negative-value]
    (id3 examples target-attribute positive-value negative-value
         (remove #{target-attribute} (set (mapcat keys examples)))))
   ([examples target-attribute positive-value negative-value attributes]
    "Induce tree for deciding the target-attribute (only for 'attrs', if given)."
-   ;;(println "attributes:" attributes)
    (let [num-positive (count (subset examples target-attribute positive-value))]
      (cond
        ;; If all examples are positive, return the root labeled 'positive-value'
-       (= num-positive (count examples)) (do positive-value)
+       (= num-positive (count examples)) positive-value
        ;; -- no  -- || --                                       'negative-value'
-       (= num-positive 0) (do negative-value)
-       ;; If attributes are empty, return the root labeled with
-       ;; the most common value of 'target-attribute'
-       (empty? attributes) (do (most-common-attr-val target-attribute examples))
-       ;; Otherwise ...
+       (= num-positive 0) negative-value
+       ;; Attributes empty -> Pick root labaled w/most common 'target-attribute'
+       (empty? attributes) (most-common-attr-val target-attribute examples)
+       ;; Otherwise create subtree for value with highest info gain
        true
-       (let [;; Pick the value with highest info gain.
-             attr (most-info-gaining-attr attributes examples target-attribute)
-             ;; Fetch all possible values for it
+       (let [attr (most-info-gaining-attr attributes examples target-attribute)
              attr-vals (keys (attr-val-counts attr examples))]
-         ;; Create a node labeled by this attribute ...
-         (cons
-          attr
-          (reduce (fn [tree attr-val]
-                    (let [sub (subset examples attr attr-val)]
-                      (cons
-                      (cons attr-val
-                            (if (empty? sub)
-                              (most-common-attr-val target-attribute examples)
-                              (list (id3 sub target-attribute positive-value negative-value (remove #{attr} attributes)))))
-                      tree)))
-                  nil
-                  attr-vals)))))))
-
-;; TODO: Probably better to return an array map...
-;; {:outlook {"rain" {:wind {"weak" "yes" "strong" "no"}}
-;;            "overcast" "yes"
-;;            "sunny" {:humidity {"high" "no" "normal" "yes"}}}}
-
+         {attr
+          (reduce
+           (fn [tree attr-val]
+             (let [sub (subset examples attr attr-val)]
+               (assoc tree
+                      attr-val
+                      (if (empty? sub)
+                        (most-common-attr-val target-attribute examples)
+                        (id3 sub
+                             target-attribute
+                             positive-value
+                             negative-value
+                             (remove #{attr} attributes))))))
+           {}
+           attr-vals)})))))
