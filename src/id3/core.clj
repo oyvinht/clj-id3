@@ -95,5 +95,10 @@
            {}
            attr-vals)})))))
 
-;(defn classify [instance decision-tree]
-  
+(defn classify [instance decision-tree]
+  "Classify an instance (map) using decision-tree created by the id3 function."
+  (if (not (map? decision-tree))
+    decision-tree
+    (let [k (first (keys decision-tree))]
+      (classify instance
+                (get (get decision-tree k) (get instance k))))))
