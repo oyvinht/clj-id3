@@ -7,8 +7,19 @@ A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3, aka
 
 ## Usage
 
+project.clj:
+```
+(...)
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [net.clojars.oyvinht/id3 "1.0.0"]]
+(...)
 ```
 
+core.clj:
+```
+(ns test-id3.core
+  (:use [id3.core]))
+  
 (def examples
   [{:outlook "sunny"    :temp "hot"  :humidity "high"   :wind "weak"   :play-tennis "no"}
    {:outlook "sunny"    :temp "hot"  :humidity "high"   :wind "strong" :play-tennis "no"}
@@ -32,7 +43,6 @@ A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3, aka
 (classify instance dtree)
 
 ;;;; -> "yes"
-
 ```
 
 Copyright © 2021 Øyvin Halfdan Thuv
