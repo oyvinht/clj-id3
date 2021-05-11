@@ -4,6 +4,34 @@ A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3.
 
 ## Usage
 
+```
+
+(def examples
+  [{:outlook "sunny"    :temp "hot"  :humidity "high"   :wind "weak"   :play-tennis "no"}
+   {:outlook "sunny"    :temp "hot"  :humidity "high"   :wind "strong" :play-tennis "no"}
+   {:outlook "overcast" :temp "hot"  :humidity "high"   :wind "weak"   :play-tennis "yes"}
+   {:outlook "rain"     :temp "mild" :humidity "high"   :wind "weak"   :play-tennis "yes"}
+   {:outlook "rain"     :temp "cool" :humidity "normal" :wind "weak"   :play-tennis "yes"}
+   {:outlook "rain"     :temp "cool" :humidity "normal" :wind "strong" :play-tennis "no"}
+   {:outlook "overcast" :temp "cool" :humidity "normal" :wind "strong" :play-tennis "yes"}
+   {:outlook "sunny"    :temp "mild" :humidity "high"   :wind "weak"   :play-tennis "no"}
+   {:outlook "sunny"    :temp "cool" :humidity "normal" :wind "weak"   :play-tennis "yes"}
+   {:outlook "rain"     :temp "mild" :humidity "normal" :wind "weak"   :play-tennis "yes"}
+   {:outlook "sunny"    :temp "mild" :humidity "normal" :wind "strong" :play-tennis "yes"}
+   {:outlook "overcast" :temp "mild" :humidity "high"   :wind "strong" :play-tennis "yes"}
+   {:outlook "overcast" :temp "hot"  :humidity "normal" :wind "weak"   :play-tennis "yes"}
+   {:outlook "rain"     :temp "mild" :humidity "high"   :wind "strong" :play-tennis "no"}])
+
+(def dtree (id3 examples :play-tennis "yes" "no"))
+
+(def instance {:humidity "high" :outlook "overcast" :temp "hot" :wind "weak"})
+
+(classify instance dtree)
+
+;;;; -> "yes"
+
+```
+
 Copyright © 2021 Øyvin Halfdan Thuv
 
 This program and the accompanying materials are made available under the
