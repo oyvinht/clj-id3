@@ -1,6 +1,6 @@
 # ID3
 
-A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3.
+A Clojure library implementing Quinlans well-known Iterative Dichotomiser 3, aka "Induction of Decision Trees".
 
 ## Usage
 
